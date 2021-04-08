@@ -6,7 +6,7 @@ export default class Palette extends Component {
   render() {
 
     const colors = this.props.colors.map(color => (
-      <ColorBox color={color.color} name={color.name}/>
+      <ColorBox background={color.color} name={color.name}/>
     ))
     
     return (
