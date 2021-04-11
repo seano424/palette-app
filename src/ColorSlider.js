@@ -8,7 +8,7 @@ export default class ColorSlider extends Component {
     return (
       <div class="slider">
         <Slider
-          defaultValue={500}
+          defaultValue={this.props.level}
           min={100}
           max={900}
           step={100}
