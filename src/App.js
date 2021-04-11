@@ -1,7 +1,8 @@
+import { Route, Switch } from "react-router-dom";
+import { generatePalette } from "./colorHelpers";
 import seeds from "./seedPalette";
 import Palette from "./Palette";
-import { generatePalette } from "./colorHelpers";
-import { Route, Switch } from "react-router-dom";
+import PaletteList from './PaletteList'
 
 function App() {
   console.log(seeds);
@@ -11,7 +12,7 @@ function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" render={() => <h1>All PALETTES</h1>} />
+        <Route exact path="/" render={() => <PaletteList palettes={seeds}/>} />
         <Route
           exact
           path="/palette/:id"
