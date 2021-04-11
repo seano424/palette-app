@@ -1,0 +1,18 @@
+.Navbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 8vh;
+}
+
+.Navbar .logo {
+  background: turquoise;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: .4rem;
+}
+
+.Navbar .slider-level-info {
+  margin-left: 1rem;
+}
