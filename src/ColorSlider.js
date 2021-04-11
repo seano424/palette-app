@@ -6,7 +6,7 @@ import './ColorSlider.css'
 export default class ColorSlider extends Component {
   render() {
     return (
-      <div class="slider">
+      <div className="slider">
         <Slider
           defaultValue={this.props.level}
           min={100}

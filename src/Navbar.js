@@ -14,9 +14,9 @@ export default class Navbar extends Component {
     open: false,
   };
 
-  handleChange = (e) => {
+  handleFormatChange = (e) => {
     this.setState({ format: e.target.value, open: true }, () => {
-      this.props.handleChange(this.state.format);
+      this.props.handleFormatChange(this.state.format);
     });
   };
 
@@ -30,20 +30,20 @@ export default class Navbar extends Component {
     return (
       <header className="Navbar">
         <div className="logo">reactcolorpicker</div>
-        <div class="slider-level-info">level: {level}</div>
+        <div className="slider-level-info">level: {level}</div>
         <ColorSlider handleSlider={handleSlider} level={level} />
-        <div class="select-container" style={{ marginLeft: "6rem" }}>
-          <Select value={format} onChange={this.handleChange}>
+        <div className="select-container">
+          <Select value={format} onChange={this.handleFormatChange}>
             <MenuItem value="hex">HEX - #1234EF</MenuItem>
             <MenuItem value="rgb">RGB - rgb(255, 255, 255)</MenuItem>
             <MenuItem value="rgba">RGBA - rgba(255, 255, 255, 1.0)</MenuItem>
           </Select>
         </div>
-        <div class="snackbar">
+        <div className="snackbar">
           <Snackbar
             anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
             open={this.state.open}
-            message={<span>Format Changed!</span>}
+            message={<span id="msg-format">Format Changed to {format.toUpperCase()}!</span>}
             onClose={this.handleClose}
             action={
               <IconButton

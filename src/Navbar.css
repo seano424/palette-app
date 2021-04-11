@@ -13,13 +13,11 @@
   padding: 0.4rem;
 }
 
-.Navbar .slider-level-info {
+.slider-level-info {
   margin-left: 1rem;
 }
 
-.Navbar .select-container {
-  position: absolute;
-  right: 1rem;
-  display: flex;
-  justify-content: center;
+.select-container {
+  margin-left: auto;
+  margin-right: 1rem;
 }

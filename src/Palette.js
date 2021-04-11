@@ -13,7 +13,7 @@ export default class Palette extends Component {
     this.setState({ level });
   };
 
-  handleChange = (format) => {
+  handleFormatChange = (format) => {
     this.setState({ format });
   };
 
@@ -30,7 +30,7 @@ export default class Palette extends Component {
         <Navbar
           level={level}
           handleSlider={this.handleSlider}
-          handleChange={this.handleChange}
+          handleFormatChange={this.handleFormatChange}
         />
         <div className="Palette-colors">{colorBox}</div>
       </div>
