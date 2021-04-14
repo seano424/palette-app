@@ -3,6 +3,7 @@ import { generatePalette } from "./colorHelpers";
 import seeds from "./seedPalette";
 import Palette from "./Palette";
 import PaletteList from "./PaletteList";
+import ColorPalette from './ColorPalette'
 
 function App() {
   const findPalette = (id) => {
@@ -32,7 +33,7 @@ function App() {
         <Route
           exact
           path={`/palette/:paletteId/:colorId`}
-          render={() => <h1>SINGLE COLOR PAGE</h1>}
+          render={() => <ColorPalette />}
         />
       </Switch>
     </div>
