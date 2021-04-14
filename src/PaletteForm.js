@@ -1,26 +1,21 @@
 import React, { Component } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import { withStyles } from "@material-ui/core/styles";
+import { ChromePicker } from "react-color";
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: "flex",
   },
@@ -79,23 +74,37 @@ const styles = theme => ({
 
 class PaletteForm extends Component {
   state = {
-    open: false
-  }
+    open: true,
+    currentColor: "teal",
+    colors: ["teal", "tomato", "aqua"],
+  };
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
+  changeColor = (newColor) => {
+    this.setState({ currentColor: newColor.hex });
+  };
+
+  addNewColor = () => {
+    // console.log(this.state.currentColor);
+    // this.setState({colors: [...this.state.colors, this.state.currentColor]})
+    this.setState(prevState => ({
+      colors: [...prevState.colors, prevState.currentColor]
+    }))
+  };
 
   render() {
     // const classes = useStyles();
     // const theme = useTheme();
     // const [open, setOpen] = React.useState(false);
 
-    const handleDrawerOpen = () => {
-      this.setState({open: true})
-    };
-
-    const handleDrawerClose = () => {
-      this.setState({open: false})
-    };
-
-    const { classes } = this.props
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -110,9 +119,12 @@ class PaletteForm extends Component {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
+              onClick={this.handleDrawerOpen}
               edge="start"
-              className={clsx(classes.menuButton, this.state.open && classes.hide)}
+              className={clsx(
+                classes.menuButton,
+                this.state.open && classes.hide
+              )}
             >
               <MenuIcon />
             </IconButton>
@@ -131,11 +143,31 @@ class PaletteForm extends Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={this.handleDrawerClose}>
               <ChevronLeftIcon />
             </IconButton>
           </div>
           <Divider />
+          <Typography variant="h4">Design your palette</Typography>
+          <div>
+            <Button variant="contained" color="primary">
+              Clear Palette
+            </Button>
+            <Button variant="contained" color="secondary">
+              Random Color
+            </Button>
+          </div>
+          <ChromePicker
+            color={this.state.currentColor}
+            onChangeComplete={this.changeColor}
+          />
+          <Button
+            onClick={this.addNewColor}
+            variant="contained"
+            color="secondary"
+          >
+            Add Color
+          </Button>
           <Divider />
         </Drawer>
         <main
@@ -144,11 +176,15 @@ class PaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          
+          {this.state.colors.map((color) => (
+            <div key={color} style={{ backgroundColor: color }}>
+              {color}
+            </div>
+          ))}
         </main>
       </div>
     );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(PaletteForm)
+export default withStyles(styles, { withTheme: true })(PaletteForm);

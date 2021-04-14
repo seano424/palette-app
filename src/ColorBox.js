@@ -28,8 +28,6 @@ class ColorBox extends Component {
 
 
     const { name, background, colorId, paletteId, showLink, classes } = this.props;
-    console.log(chroma(background).luminance());
-    const dark = chroma(background).luminance() < .5
 
     const { copied } = this.state;
     return (
