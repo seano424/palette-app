@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 import "./Navbar.css";
 
@@ -33,8 +33,12 @@ export default class Navbar extends Component {
         <div className="logo">
           <Link to="/">reactcolorpicker</Link>
         </div>
-        <div className="slider-level-info">level: {level}</div>
-        <ColorSlider handleSlider={handleSlider} level={level} />
+        {this.props.showSlider && (
+          <>
+            <div className="slider-level-info">level: {level}</div>
+            <ColorSlider handleSlider={handleSlider} level={level} />
+          </>
+        )}
         <div className="select-container">
           <Select value={format} onChange={this.handleFormatChange}>
             <MenuItem value="hex">HEX - #1234EF</MenuItem>
@@ -47,7 +51,11 @@ export default class Navbar extends Component {
             anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
             autoHideDuration={2000}
             open={this.state.open}
-            message={<span id="msg-format">Format Changed to {format.toUpperCase()}!</span>}
+            message={
+              <span id="msg-format">
+                Format Changed to {format.toUpperCase()}!
+              </span>
+            }
             onClose={this.handleClose}
             action={
               <IconButton
