@@ -8,10 +8,6 @@
   margin-bottom: -3.5px;
 }
 
-.text-white {
-  color: white;
-}
-
 .ColorBox.go-back {
   background-color: black;
 }
@@ -68,12 +64,13 @@
   border: none;
   right: 0;
   bottom: 0;
-  color: white;
   width: 60px;
   height: 30px;
   text-align: center;
   line-height: 30px;
 }
+
+
 
 .copy-overlay {
   width: 100%;
