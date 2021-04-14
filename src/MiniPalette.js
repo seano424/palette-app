@@ -7,13 +7,13 @@ const styles = {
     borderRadius: "5px",
     overflow: "hidden",
     backgroundColor: "white",
-    border: '10px solid white;'
+    border: "10px solid white;",
   },
   colors: {
-    height: '150px',
-    width: '100%',
-    borderRadius: '5px',
-    overflow: 'hidden'
+    height: "150px",
+    width: "100%",
+    borderRadius: "5px",
+    overflow: "hidden",
   },
   title: {
     display: "flex",
@@ -24,20 +24,20 @@ const styles = {
     fontWeight: "bold",
   },
   emoji: {
-    fontSize: '1.5rem',
+    fontSize: "1.5rem",
   },
   miniColor: {
-    width: '20%',
-    height: '25%',
-    display: 'inline-block',
-    margin: '0 auto',
-    position: 'relative',
-    marginBottom: '-3.5px'
-  }
+    width: "20%",
+    height: "25%",
+    display: "inline-block",
+    margin: "0 auto",
+    position: "relative",
+    marginBottom: "-3.5px",
+  },
 };
 
 function MiniPalette(props) {
-  const { classes, paletteName, colors, emoji } = props;
+  const { classes, paletteName, colors, emoji, id, handleClick } = props;
   const miniColorBoxes = colors.map((color) => (
     <div
       className={classes.miniColor}
@@ -46,7 +46,7 @@ function MiniPalette(props) {
     ></div>
   ));
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onClick={() =>  handleClick(id)}>
       <div className={classes.colors}>{miniColorBoxes}</div>
       <div className={classes.title}>
         {paletteName} <span className={classes.emoji}>{emoji}</span>

@@ -16,3 +16,9 @@
   font-weight: bold;
 }
 
+.emoji {
+  margin-right: 1rem;
+  margin-left: .5rem;
+  font-size: 1.5rem;
+}
+

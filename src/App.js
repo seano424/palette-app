@@ -5,14 +5,13 @@ import Palette from "./Palette";
 import PaletteList from './PaletteList'
 
 function App() {
-  console.log(seeds);
   const findPalette = (id) => {
     return seeds.find(seed => seed.id === id)
   }
   return (
     <div>
       <Switch>
-        <Route exact path="/" render={() => <PaletteList palettes={seeds}/>} />
+        <Route exact path="/" render={(routeProps) => <PaletteList palettes={seeds} {...routeProps}/>} />
         <Route
           exact
           path="/palette/:id"
