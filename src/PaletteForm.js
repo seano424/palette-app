@@ -12,7 +12,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { withStyles } from "@material-ui/core/styles";
 import { ChromePicker } from "react-color";
-import DraggableColorBox from './DraggableColorBox'
+import DraggableColorBox from "./DraggableColorBox";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 const drawerWidth = 240;
 
@@ -56,7 +57,7 @@ const styles = (theme) => ({
     justifyContent: "flex-end",
   },
   content: {
-    height: 'calc(100vh - 64px)',
+    height: "calc(100vh - 64px)",
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
@@ -78,8 +79,16 @@ class PaletteForm extends Component {
   state = {
     open: true,
     currentColor: "teal",
-    colors: ["teal", "tomato", "aqua"],
+    colors: [{color: 'blue', name: 'blue'}],
+    newName: "",
   };
+
+  componentDidMount() {
+    // custom rule will have name 'isPasswordMatch'
+    ValidatorForm.addValidationRule('isColorNameDifferent', (value) => {
+        return this.state.colors.every(({name}) => name.toLowerCase() !== value.toLowerCase())
+    });
+}
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -93,19 +102,24 @@ class PaletteForm extends Component {
     this.setState({ currentColor: newColor.hex });
   };
 
+  handleChange = (evt) => {
+    this.setState({ newName: evt.target.value });
+  };
+
   addNewColor = () => {
+    const newColor = {
+      color: this.state.currentColor,
+      name: this.state.newName,
+    };
+    console.log(newColor);
     // console.log(this.state.currentColor);
     // this.setState({colors: [...this.state.colors, this.state.currentColor]})
-    this.setState(prevState => ({
-      colors: [...prevState.colors, prevState.currentColor]
-    }))
+    this.setState((prevState) => ({
+      colors: [...prevState.colors, newColor],
+    }));
   };
 
   render() {
-    // const classes = useStyles();
-    // const theme = useTheme();
-    // const [open, setOpen] = React.useState(false);
-
     const { classes } = this.props;
 
     return (
@@ -163,13 +177,21 @@ class PaletteForm extends Component {
             color={this.state.currentColor}
             onChangeComplete={this.changeColor}
           />
-          <Button
-            onClick={this.addNewColor}
-            variant="contained"
-            color="secondary"
-          >
-            Add Color
-          </Button>
+          <ValidatorForm onSubmit={this.addNewColor}>
+            <TextValidator
+              value={this.state.newName}
+              onChange={this.handleChange}
+              validators={["required", "isColorNameDifferent"]}
+              errorMessages={[
+                "this field is required",
+                "that color name is taken",
+              ]}
+            />
+            <Button type="submit" variant="contained" color="secondary">
+              Add Color
+            </Button>
+          </ValidatorForm>
+
           <Divider />
         </Drawer>
         <main
@@ -179,7 +201,11 @@ class PaletteForm extends Component {
         >
           <div className={classes.drawerHeader} />
           {this.state.colors.map((color) => (
-            <DraggableColorBox key={color} color={color} />
+            <DraggableColorBox
+              key={color.name}
+              color={color.color}
+              name={color.name}
+            />
           ))}
         </main>
       </div>
