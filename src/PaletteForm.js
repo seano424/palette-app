@@ -88,6 +88,10 @@ class PaletteForm extends Component {
     ValidatorForm.addValidationRule('isColorNameDifferent', (value) => {
         return this.state.colors.every(({name}) => name.toLowerCase() !== value.toLowerCase())
     });
+
+    ValidatorForm.addValidationRule('isColorDifferent', (value) => {
+        return this.state.colors.every(({color}) => color !== this.state.currentColor)
+    });
 }
 
   handleDrawerOpen = () => {
@@ -181,9 +185,9 @@ class PaletteForm extends Component {
             <TextValidator
               value={this.state.newName}
               onChange={this.handleChange}
-              validators={["required", "isColorNameDifferent"]}
+              validators={["isColorDifferent", "isColorNameDifferent"]}
               errorMessages={[
-                "this field is required",
+                "color already used",
                 "that color name is taken",
               ]}
             />
