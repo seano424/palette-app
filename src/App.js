@@ -5,28 +5,46 @@ import Palette from "./Palette";
 import PaletteList from "./PaletteList";
 import ColorPalette from "./ColorPalette";
 import PaletteForm from "./PaletteForm";
+import React, { Component } from 'react'
 
-function App() {
-  const findPalette = (id) => {
-    return seeds.find((seed) => seed.id === id);
+export default class App extends Component {
+
+  state = {
+    palettes: seeds
+  }
+
+  findPalette = (id) => {
+    return this.state.palettes.find((palette) => palette.id === id);
   };
-  return (
-    <div>
+
+  savePalette = (newPalette) => {
+    this.setState({palettes: [...this.state.palettes, newPalette]})
+  };
+
+  render() {
+    return (
+      <div>
       <Switch>
         <Route
           exact
           path="/"
           render={(routeProps) => (
-            <PaletteList palettes={seeds} {...routeProps} />
+            <PaletteList palettes={this.state.palettes} {...routeProps} />
           )}
         />
-        <Route exact path="/palette/create" render={() => <PaletteForm />} />
+        <Route
+          exact
+          path="/palette/create"
+          render={(routeProps) => (
+            <PaletteForm savePalette={this.savePalette} {...routeProps} />
+          )}
+        />
         <Route
           exact
           path="/palette/:id"
           render={(routeProps) => (
             <Palette
-              palette={generatePalette(findPalette(routeProps.match.params.id))}
+              palette={generatePalette(this.findPalette(routeProps.match.params.id))}
             />
           )}
         />
@@ -36,7 +54,7 @@ function App() {
           render={(routeProps) => (
             <ColorPalette
               palette={generatePalette(
-                findPalette(routeProps.match.params.paletteId)
+                this.findPalette(routeProps.match.params.paletteId)
               )}
               color={routeProps.match.params.colorId}
             />
@@ -44,7 +62,6 @@ function App() {
         />
       </Switch>
     </div>
-  );
+    )
+  }
 }
-
-export default App;

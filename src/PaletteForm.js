@@ -115,13 +115,23 @@ class PaletteForm extends Component {
       color: this.state.currentColor,
       name: this.state.newName,
     };
-    console.log(newColor);
-    // console.log(this.state.currentColor);
-    // this.setState({colors: [...this.state.colors, this.state.currentColor]})
     this.setState((prevState) => ({
       colors: [...prevState.colors, newColor],
+      newName: ''
     }));
   };
+
+  handleSubmit = () => {
+    const newName = 'This is my new palette'
+    const newPalette = {
+      name: newName,
+      id: newName.toLowerCase().replace(/ /g, '-'),
+      colors: this.state.colors
+    }
+    console.log(newPalette);
+    this.props.savePalette(newPalette)
+    this.props.history.push('/')
+  }
 
   render() {
     const { classes } = this.props;
@@ -131,6 +141,7 @@ class PaletteForm extends Component {
         <CssBaseline />
         <AppBar
           position="fixed"
+          color="default"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: this.state.open,
           })}
@@ -151,6 +162,7 @@ class PaletteForm extends Component {
             <Typography variant="h6" noWrap>
               Persistent drawer
             </Typography>
+            <Button onClick={this.handleSubmit} variant="contained" color="primary">Save Palette</Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -185,8 +197,9 @@ class PaletteForm extends Component {
             <TextValidator
               value={this.state.newName}
               onChange={this.handleChange}
-              validators={["isColorDifferent", "isColorNameDifferent"]}
+              validators={["required" ,"isColorDifferent", "isColorNameDifferent"]}
               errorMessages={[
+                "enter a color name",
                 "color already used",
                 "that color name is taken",
               ]}
