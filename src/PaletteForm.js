@@ -80,7 +80,7 @@ class PaletteForm extends Component {
   state = {
     open: true,
     currentColor: "teal",
-    colors: [{ color: "blue", name: "blue" }],
+    colors: [],
     newColorName: "",
     newPaletteName: "",
   };
@@ -144,6 +144,16 @@ class PaletteForm extends Component {
     this.props.savePalette(newPalette);
     this.props.history.push("/");
   };
+
+  handleClick = (colorName) => {
+    // this.setState({colors: this.state.colors.filter(color => color.name !== colorName)})
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        colors: prevState.colors.filter(color => color.name !== colorName)
+      }
+    })
+  }
 
   render() {
     const { classes } = this.props;
@@ -265,6 +275,7 @@ class PaletteForm extends Component {
           <div className={classes.drawerHeader} />
           {this.state.colors.map((color) => (
             <DraggableColorBox
+              handleClick={this.handleClick}
               key={color.name}
               color={color.color}
               name={color.name}
