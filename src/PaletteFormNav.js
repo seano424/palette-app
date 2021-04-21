@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FormDialog from "./FormDialog";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +12,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 export default class PaletteFormNav extends Component {
-
   componentDidMount() {
     ValidatorForm.addValidationRule("isPaletteNameDifferent", (value) => {
       return this.props.palettes.every(
@@ -53,38 +53,22 @@ export default class PaletteFormNav extends Component {
             <Typography variant="h6" noWrap>
               Persistent drawer
             </Typography>
-            <ValidatorForm
-              onSubmit={handleSubmit}
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                width: "40%",
-              }}
-            >
-              <TextValidator
-                label="Palette Name"
-                value={newPaletteName}
-                name="newPaletteName"
-                onChange={handleChange}
-                validators={["required", "isPaletteNameDifferent"]}
-                errorMessages={[
-                  "palette name required",
-                  "palette name is already in use",
-                ]}
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <FormDialog
+                newPaletteName={newPaletteName}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
               />
-              <Button type="submit" variant="contained" color="primary">
-                Save Palette
-              </Button>
               <Link to="/" style={{ textDecoration: "none" }}>
                 <Button
                   variant="contained"
                   color="secondary"
-                  style={{ height: "100%" }}
+                  style={{ height: "100%", margin: '1rem' }}
                 >
                   Go Back
                 </Button>
               </Link>
-            </ValidatorForm>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
