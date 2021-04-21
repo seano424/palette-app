@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import PaletteFormNav from "./PaletteFormNav";
+import ColorPickerForm from "./ColorPickerForm";
 import DraggableColorList from "./DraggableColorList";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { withStyles } from "@material-ui/core/styles";
-import { ChromePicker } from "react-color";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { arrayMove } from "react-sortable-hoc";
 
 const drawerWidth = 300;
@@ -88,21 +85,6 @@ class PaletteForm extends Component {
       colors: arrayMove(colors, oldIndex, newIndex),
     }));
   };
-
-  componentDidMount() {
-    // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule("isColorNameDifferent", (value) => {
-      return this.state.colors.every(
-        ({ name }) => name.toLowerCase() !== value.toLowerCase()
-      );
-    });
-
-    ValidatorForm.addValidationRule("isColorDifferent", (value) => {
-      return this.state.colors.every(
-        ({ color }) => color !== this.state.currentColor
-      );
-    });
-  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -204,55 +186,17 @@ class PaletteForm extends Component {
             </IconButton>
           </div>
           <Divider />
-          <Typography variant="h4">Design your palette</Typography>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.clearColors}
-            >
-              Clear Palette
-            </Button>
-            <Button
-              disabled={colors.length >= 20}
-              variant="contained"
-              color="secondary"
-              onClick={this.addRandomColor}
-            >
-              Random Color
-            </Button>
-          </div>
-          <ChromePicker
-            color={this.state.currentColor}
-            onChangeComplete={this.changeColor}
+          <ColorPickerForm
+            colors={colors}
+            clearColors={this.clearColors}
+            addRandomColor={this.addRandomColor}
+            currentColor={this.state.currentColor}
+            changeColor={this.changeColor}
+            addNewColor={this.addNewColor}
+            newColorName={this.state.newColorName}
+            handleChange={this.handleChange}
+            isFull={isFull}
           />
-          <ValidatorForm onSubmit={this.addNewColor}>
-            <TextValidator
-              value={this.state.newColorName}
-              name="newColorName"
-              onChange={this.handleChange}
-              validators={[
-                "required",
-                "isColorDifferent",
-                "isColorNameDifferent",
-              ]}
-              errorMessages={[
-                "enter a color name",
-                "color already used",
-                "that color name is taken",
-              ]}
-            />
-
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isFull}
-              color={isFull ? `primary` : `secondary`}
-            >
-              {isFull ? "Colors full" : "Add color"}
-            </Button>
-          </ValidatorForm>
-
           <Divider />
         </Drawer>
         <main
