@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { ValidatorForm } from "react-material-ui-form-validator";
 
 export default class PaletteFormNav extends Component {
   componentDidMount() {
@@ -51,7 +51,7 @@ export default class PaletteFormNav extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Persistent drawer
+               Pick a color 🐠
             </Typography>
             <div style={{display: 'flex', alignItems: 'center'}}>
               <FormDialog

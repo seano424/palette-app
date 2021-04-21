@@ -45,14 +45,14 @@ class ColorPickerForm extends Component {
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
     ValidatorForm.addValidationRule("isColorNameDifferent", (value) => {
-      return this.state.colors.every(
+      return this.props.colors.every(
         ({ name }) => name.toLowerCase() !== value.toLowerCase()
       );
     });
 
     ValidatorForm.addValidationRule("isColorDifferent", (value) => {
-      return this.state.colors.every(
-        ({ color }) => color !== this.state.currentColor
+      return this.props.colors.every(
+        ({ color }) => color !== this.props.currentColor
       );
     });
   }
